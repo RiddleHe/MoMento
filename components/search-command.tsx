@@ -6,6 +6,7 @@ import { useQuery } from "convex/react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/clerk-react";
 
+
 import {
   CommandDialog,
   CommandEmpty,
@@ -18,6 +19,7 @@ import { useSearch } from "@/hooks/use-search";
 import { api } from "@/convex/_generated/api";
 
 export const SearchCommand = () => {
+  const [searchQuery, setSearchQuery] = useState("");
   const { user } = useUser();
   const router = useRouter();
   const documents = useQuery(api.documents.getSearch);
@@ -52,10 +54,17 @@ export const SearchCommand = () => {
     return null;
   }
 
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
+
   return (
     <CommandDialog open={isOpen} onOpenChange={onClose}>
       <CommandInput
-        placeholder={`Search ${user?.fullName}'s Jotion...`}
+        placeholder={`Search ${user?.fullName}'s MCITotion...`}
+        onChange={handleInputChange}
       />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
@@ -66,6 +75,7 @@ export const SearchCommand = () => {
               value={`${document._id}-${document.title}`}
               title={document.title}
               onSelect={() => onSelect(document._id)}
+              searchQuery={searchQuery} // 这里传递 searchQuery 属性
             >
               {document.icon ? (
                 <p className="mr-2 text-[18px]">

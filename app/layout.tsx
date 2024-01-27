@@ -21,13 +21,13 @@ export const metadata: Metadata = {//网站标题和描述
     icon: [
       {
         media: "(prefers-color-scheme: light)",
-        url: "/logo.svg",
-        href: "/logo.svg",
+        url: "/logo-black-new.png",
+        href: "/logo-black-new.png",
       },
       {
         media: "(prefers-color-scheme: dark)",
-        url: "/logo-dark.svg",
-        href: "/logo-dark.svg",
+        url: "/logo-white-new.png",
+        href: "/logo-white-new.png",
       }
     ]
   }
