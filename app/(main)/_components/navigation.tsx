@@ -11,8 +11,8 @@ import {
 } from "lucide-react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "usehooks-ts";
-import { useMutation } from "convex/react";
+import { useMediaQuery } from "usehooks-ts";//用于检测屏幕宽度是否小于768px
+import { useMutation } from "convex/react";//创建新文档
 import { toast } from "sonner";
 
 import { cn } from "@/lib/utils";
@@ -60,7 +60,7 @@ export const Navigation = () => {
     }
   }, [pathname, isMobile]);
 
-  const handleMouseDown = (
+  const handleMouseDown = (//处理鼠标拖动sidebar
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     event.preventDefault();
@@ -85,13 +85,13 @@ export const Navigation = () => {
     }
   };
 
-  const handleMouseUp = () => {
+  const handleMouseUp = () => {//how much can expand the sidebar
     isResizingRef.current = false;
     document.removeEventListener("mousemove", handleMouseMove);
     document.removeEventListener("mouseup", handleMouseUp);
   };
 
-  const resetWidth = () => {
+  const resetWidth = () => {//reset the sidebar width to origin
     if (sidebarRef.current && navbarRef.current) {
       setIsCollapsed(false);
       setIsResetting(true);
@@ -105,19 +105,19 @@ export const Navigation = () => {
         "left",
         isMobile ? "100%" : "240px"
       );
-      setTimeout(() => setIsResetting(false), 300);
+      setTimeout(() => setIsResetting(false), 300);//展开sidebar的延迟为300ms
     }
   };
 
-  const collapse = () => {
+  const collapse = () => {//收缩sidebar的图标功能
     if (sidebarRef.current && navbarRef.current) {
-      setIsCollapsed(true);
-      setIsResetting(true);
+      setIsCollapsed(true);//图标现阶段是收缩的
+      setIsResetting(true);//图标现阶段正在进行收缩状态变化
 
       sidebarRef.current.style.width = "0";
       navbarRef.current.style.setProperty("width", "100%");
       navbarRef.current.style.setProperty("left", "0");
-      setTimeout(() => setIsResetting(false), 300);
+      setTimeout(() => setIsResetting(false), 300);//让收缩视觉看起来丝滑
     }
   }
 
@@ -167,7 +167,7 @@ export const Navigation = () => {
           />
           <Item
             onClick={handleCreate}
-            label="New page"
+            label="New note"
             icon={PlusCircle}
           />
         </div>
@@ -212,7 +212,7 @@ export const Navigation = () => {
         ) : (
           <nav className="bg-transparent px-3 py-2 w-full">
             {isCollapsed && <MenuIcon onClick={resetWidth} role="button" className="h-6 w-6 text-muted-foreground" />}
-          </nav>
+          </nav>//收缩sidebar的按钮
         )}
       </div>
     </>
