@@ -98,9 +98,10 @@ const Editor = ({
       async (prompt: string) => {
         const response = await complete(prompt);
         const responseString = `${response}`;
-        editor.updateBlock(
+        editor.insertBlocks(
+            [{content: responseString}],
             editor.getTextCursorPosition().block,
-            {content: responseString}
+            "after"
         );
       },
       [complete]

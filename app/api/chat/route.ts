@@ -11,13 +11,14 @@ export async function POST(
         const openai = new OpenAI();
         const userPrompt = `
         
-        User: "${prompt}"
+        Answer the following prompt not in an answering style, but as if you are completing the person's paragraph.
         
+        ${prompt}
         
         `
         const completion = await openai.chat.completions.create({
-            messages: [{"role": "system", "content": "You are a diligent study buddy. You are helping your friend revise their notes or codes."},
-                {"role": "user", "content": prompt}],
+            messages: [{"role": "system", "content": "You are a diligent study buddy. You are helping your friend complete their study notes."},
+                {"role": "user", "content": userPrompt}],
             model: "gpt-3.5-turbo",
         });
 
