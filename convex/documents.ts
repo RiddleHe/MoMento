@@ -63,9 +63,12 @@ export const getSidebar = query({
     }
 
     const documents = await ctx.db
-      .query("documents")
-      .order("desc")
-      .collect();
+        .query("documents")
+        .filter((q) =>
+            q.eq(q.field("isArchived"), false)
+        )
+        .order("asc")
+        .collect();
 
     return documents;
   },

@@ -36,16 +36,16 @@ export const DocumentList = () => {
   return (
     <>
       {documents.map((document) => (
-        <div key={document._id}>
-          <Item
-            id={document._id}
-            onClick={() => onRedirect(document._id)}
-            label={document.title}
-            icon={FileIcon}
-            documentIcon={document.icon}
-            active={params.documentId === document._id}
-          />
-        </div>
+          <div key={document._id}>
+            <Item
+                id={document._id}
+                onClick={() => onRedirect(document._id)}
+                label={document.title}
+                icon={FileIcon}
+                documentIcon={document.icon}
+                active={params.documentId === document._id}
+            />
+          </div>
       ))}
     </>
   );
