@@ -4,7 +4,6 @@ import { useTheme } from "next-themes";
 import {
   BlockNoteEditor, defaultProps,
   PartialBlock, defaultBlockSchema,
-  defaultBlockSpecs,
 } from "@blocknote/core";
 import {
   BlockNoteView, createReactBlockSpec,
@@ -12,9 +11,13 @@ import {
     getDefaultReactSlashMenuItems
 } from "@blocknote/react";
 import "@blocknote/core/style.css";
+import { useCompletion } from 'ai/react';
 
 import { useEdgeStore } from "@/lib/edgestore";
 import {HiOutlineGlobeAlt} from "react-icons/hi";
+import {Button} from "@/components/ui/button";
+import {useCallback} from "react";
+import {BeatLoader} from "react-spinners";
 
 interface EditorProps {
   onChange: (value: string) => void;
@@ -85,12 +88,38 @@ const Editor = ({
     uploadFile: handleUpload,
   })
 
+  const {
+    complete,
+    isLoading} = useCompletion({
+    api: '/api/chat'
+  });
+
+  const respondToUser = useCallback(
+      async (prompt: string) => {
+        const response = await complete(prompt);
+        const responseString = `${response}`;
+        editor.updateBlock(
+            editor.getTextCursorPosition().block,
+            {content: responseString}
+        );
+      },
+      [complete]
+  )
+
+
   return (
     <div>
       <BlockNoteView
         editor={editor}
         theme={resolvedTheme === "dark" ? "dark" : "light"}
       />
+      <Button
+        onClick={() => respondToUser(editor.getTextCursorPosition().block.content[0].text)}
+      >
+        {isLoading ?
+            <BeatLoader size={5} color={"black"} />
+            : "Generate"}
+      </Button>
     </div>
   )
 }
