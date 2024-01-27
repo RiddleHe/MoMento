@@ -1,5 +1,5 @@
 import { Toaster } from "sonner";
-import { Inter } from 'next/font/google'
+import { Inter, Dosis } from 'next/font/google'
 import type { Metadata } from 'next'
 
 import { ThemeProvider } from '@/components/providers/theme-provider'
@@ -9,12 +9,15 @@ import { EdgeStoreProvider } from "@/lib/edgestore";
 
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
 
-export const metadata: Metadata = {
+const inter = Inter({ subsets: ['latin'] })
+const dosis = Dosis({ subsets: ['latin'] });
+
+
+export const metadata: Metadata = {//网站标题和描述
   title: 'MCITotion',
   description: 'The connected workspace where better, faster work happens.',
-  icons: {
+  icons: {//切换dark and light mode
     icon: [
       {
         media: "(prefers-color-scheme: light)",
@@ -37,7 +40,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={dosis.className}>
         <ConvexClientProvider>
           <EdgeStoreProvider>
             <ThemeProvider
@@ -45,7 +48,7 @@ export default function RootLayout({
               defaultTheme="system"
               enableSystem
               disableTransitionOnChange
-              storageKey="jotion-theme-2"
+              storageKey="motion-theme-2"
             >
               <Toaster position="bottom-center" />
               <ModalProvider />

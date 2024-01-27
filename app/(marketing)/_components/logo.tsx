@@ -16,14 +16,14 @@ export const Logo = () => {
         height="40"
         width="40"
         alt="Logo"
-        className="dark:hidden"
+        className="dark:hidden"//暗模式下，隐藏亮图标
       />
       <Image
         src="/logo-dark.svg"
         height="40"
         width="40"
         alt="Logo"
-        className="hidden dark:block"
+        className="hidden dark:block"//默认情况下都隐藏图标，但是dark模式下显示
       />
       <p className={cn("font-semibold", font.className)}>
           MCITotion

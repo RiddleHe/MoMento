@@ -19,7 +19,7 @@ export const Navbar = () => {
   return (
     <div className={cn(
       "z-50 bg-background dark:bg-[#1F1F1F] fixed top-0 flex items-center w-full p-6",
-      scrolled && "border-b shadow-sm"
+      scrolled && "border-b shadow-sm"//当navbar下降的时候，将其固定在最上方
     )}>
       <Logo />
       <div className="md:ml-auto md:justify-end justify-between w-full flex items-center gap-x-2">
