@@ -8,7 +8,7 @@ import {
 import {
   BlockNoteView, createReactBlockSpec,
   useBlockNote, ReactSlashMenuItem,
-    getDefaultReactSlashMenuItems
+  getDefaultReactSlashMenuItems, FormattingToolbarProps, FormattingToolbarPositioner
 } from "@blocknote/react";
 import "@blocknote/core/style.css";
 import { useCompletion } from 'ai/react';
@@ -18,6 +18,7 @@ import {HiOutlineGlobeAlt} from "react-icons/hi";
 import {Button} from "@/components/ui/button";
 import {useCallback} from "react";
 import {BeatLoader} from "react-spinners";
+import CustomFormattingToolBar from "@/components/custom-toolbar";
 
 interface EditorProps {
   onChange: (value: string) => void;
@@ -107,15 +108,22 @@ const Editor = ({
       [complete]
   )
 
-
   return (
     <div>
       <BlockNoteView
         editor={editor}
         theme={resolvedTheme === "dark" ? "dark" : "light"}
-      />
+      >
+        <FormattingToolbarPositioner
+          editor={editor}
+          formattingToolbar={CustomFormattingToolBar}
+        />
+      </BlockNoteView>
       <Button
-        onClick={() => respondToUser(editor.getTextCursorPosition().block.content[0].text)}
+        onClick={() => {
+          respondToUser(editor.getTextCursorPosition().block.content[0].text);
+        }}
+        className="rounded-full"
       >
         {isLoading ?
             <BeatLoader size={5} color={"black"} />
