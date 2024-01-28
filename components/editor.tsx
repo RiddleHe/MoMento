@@ -31,6 +31,8 @@ import { UnControlled as CodeMirror } from 'react-codemirror2';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/clike/clike';
+
 
 interface EditorProps {
   onChange: (value: string) => void;
@@ -103,7 +105,8 @@ const Editor = ({
     } as const;
 
     // Inserting the new block after the current one.
-    editor.insertBlocks([newCodeBlock], currentBlock, "before");
+    editor.insertBlocks([newCodeBlock], currentBlock, "after");
+    // editor.setTextCursorPosition(editor.getTextCursorPosition().nextBlock as any, "end");
 
   };
 
