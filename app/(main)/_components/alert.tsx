@@ -18,8 +18,8 @@ const AlertBlock = ({showAlert, onClick }: AlertBlockProps) => {
     return (
         <div>
         {showAlert && (
-            <div className="alert-wrapper mx-3 my-2">
-                <Alert className="">
+            <div className="alert-wrapper ml-3 mr-5 mt-10 my-2">
+                <Alert className="bg-gray-700">
                     <AlertOctagon className="h-4 w-4"/>
                     <AlertTitle>Heads up!</AlertTitle>
                     <textarea
@@ -33,7 +33,7 @@ const AlertBlock = ({showAlert, onClick }: AlertBlockProps) => {
             </div>
         )},
             {!showAlert &&
-                <Button onClick={onClick} className=" toggle-alert-button mx-4 my-3 rounded-full transition-transform transform-gpu hover:-translate-y-1 hover:shadow-lg bg-gray-400 ">
+                <Button onClick={onClick} className=" toggle-alert-button mx-4 my-3 rounded-full transition-transform transform-gpu hover:-translate-y-1 hover:shadow-lg">
                     Show Alert
                 </Button>}
         </div>
