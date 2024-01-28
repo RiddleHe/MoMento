@@ -19,14 +19,14 @@ const AlertBlock = ({showAlert, onClick }: AlertBlockProps) => {
         <div>
         {showAlert && (
             <div className="alert-wrapper ml-3 mr-5 mt-10 my-2">
-                <Alert className="bg-gray-700">
+                <Alert className="">
                     <AlertOctagon className="h-4 w-4"/>
                     <AlertTitle>Heads up!</AlertTitle>
                     <textarea
                         value={inputText}
                         onChange={e => setInputText(e.target.value)}
                         placeholder="Your daily reminder..."
-                        className="text-input-class text-wrap bg-secondary mt-3" // Add your CSS class for styling
+                        className="text-input-class text-wrap mt-3" // Add your CSS class for styling
                     />
                     <button onClick={onClick} className="close-button">Close</button>
                 </Alert>
