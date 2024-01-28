@@ -173,7 +173,7 @@ const Editor = ({
         className="rounded-full ml-10 mt-4 transition hover:bg-primary/90 bg-primary/80 px-4 py-2"
       >
         {isLoading ?
-            <BeatLoader size={5} color={"black"} />
+            <BeatLoader size={5} color={resolvedTheme === "dark" ? "black" : "white"} />
             : "Generate"}
       </Button>
     </div>
