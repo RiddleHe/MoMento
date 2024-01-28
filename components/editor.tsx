@@ -38,41 +38,6 @@ interface EditorProps {
   editable?: boolean;
 };
 
-const CodeBlockComponent = createReactBlockSpec({
-  type: "codeblock",
-  containsInlineContent: true,
-  render: ({ block, editor }) => {
-    const code = block.content.length ? block.content[0].text : "# enter code here" ;
-
-    return (
-      <div>
-        <CodeMirror
-          editorDidMount={editor => {
-            setTimeout(() => editor.refresh(), 0);
-            editor.setSize(null, "auto");
-            editor.on('change', () => {
-              editor.setSize(null, "auto");
-            });
-          }}
-          options={{
-            lineNumbers: true,
-            mode: 'javascript',
-            theme: 'material',
-          }}
-          value={code}
-          onChange={(codeMirrorEditor, data, value) => {
-            editor.updateBlock(block, {
-              content: [{ type: 'text', text: value, styles: {} }],
-            });
-          }}
-        />
-      </div>
-    );
-  },
-  propSchema: {
-    ...defaultProps
-  }
-});
 
 const Editor = ({
   onChange,
@@ -81,6 +46,43 @@ const Editor = ({
 }: EditorProps) => {
   const { resolvedTheme } = useTheme();
   const { edgestore } = useEdgeStore();
+
+  const CodeBlockComponent = createReactBlockSpec({
+    type: "codeblock",
+    containsInlineContent: true,
+    render: ({ block, editor }) => {
+      const code = block.content.length ? block.content[0].text : "" ;
+
+      return (
+        <div>
+          <CodeMirror
+            value={code}
+            options={{
+              lineNumbers: true,
+              mode: 'javascript',
+              theme: 'material',
+            }}
+            onChange={(codeMirrorEditor, data, value) => {
+              editor.updateBlock(block, {
+                content: [{ type: 'text', text: value, styles: {} }],
+              });
+            }}
+
+            editorDidMount={codeeditor => {
+              setTimeout(() => codeeditor.refresh(), 0);
+              codeeditor.setSize(null, "auto");
+              codeeditor.on('change', () => {
+                codeeditor.setSize(null, "auto");
+              });
+            }}
+          />
+        </div>
+      );
+    },
+    propSchema: {
+      ...defaultProps
+    }
+  });
 
   const handleUpload = async (file: File) => {
     const response = await edgestore.publicFiles.upload({
@@ -97,7 +99,7 @@ const Editor = ({
     // New block we want to insert.
     const newCodeBlock = {
       type: "codeblock" as const,
-      content: [{ type: "text", text: "Hello world", styles: { bold: true } }],
+      // content: [{ type: "text", text: "Hello world", styles: { bold: true } }],
     } as const;
 
     // Inserting the new block after the current one.
@@ -111,7 +113,7 @@ const Editor = ({
     aliases: ["code", "cd"],
     group: "Code",
     icon: <BiCode />,
-    hint: "Inserts a code block (hint)",
+    hint: "Inserts a code block",
   }
 
   const customSchema = {
