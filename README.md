@@ -12,6 +12,8 @@ Live at: https://momento-zeta.vercel.app
 
 
 ![image](assets/document-page.png)
+
+![image](assets/code.png)
 ___
 ### Installation
 
