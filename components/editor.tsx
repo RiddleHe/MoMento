@@ -64,7 +64,7 @@ const Editor = ({
             }}
             onChange={(codeMirrorEditor, data, value) => {
               editor.updateBlock(block, {
-                content: value,
+                content: [{ type: 'text', text: value, styles: {} }] as any,
               });
             }}
 
