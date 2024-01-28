@@ -11,7 +11,7 @@ For deployment, need to use **npm install --force** due to react-codemirror2's c
 
 
 ___
-Credits:
+**Credits:**
 
 Inspired by [Notion](https://www.notion.so/)
 
