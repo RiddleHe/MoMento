@@ -29,9 +29,7 @@ interface ItemProps {
   id?: Id<"documents">;
   documentIcon?: string;
   active?: boolean;
-  expanded?: boolean;
   isSearch?: boolean;
-  level?: number;
   onExpand?: () => void;
   label: string;
   onClick?: () => void;
@@ -46,10 +44,7 @@ export const Item = ({
   active,
   documentIcon,
   isSearch,
-  level = 0,
   onExpand,
-  expanded,
-
 }: ItemProps) => {
   const { user } = useUser();
   const router = useRouter();
@@ -85,9 +80,6 @@ export const Item = ({
     if (!id) return;
     const promise = create({ title: "Untitled", parentDocument: id })
       .then((documentId) => {
-        if (!expanded) {
-          onExpand?.();
-        }
         router.push(`/documents/${documentId}`);
       });
 
@@ -98,16 +90,14 @@ export const Item = ({
     });
   };
 
-  const ChevronIcon = expanded ? ChevronDown : ChevronRight;
-
-
+  const ChevronIcon = ChevronRight;
 
   return (
     <div
       onClick={onClick}
       role="button"
-      style={{ 
-        paddingLeft: level ? `${(level * 12) + 12}px` : "12px"
+      style={{
+        paddingLeft: "12px"
       }}
       className={cn(
         "group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium",
@@ -185,11 +175,11 @@ export const Item = ({
   )
 }
 
-Item.Skeleton = function ItemSkeleton({ level }: { level?: number }) {
+Item.Skeleton = function ItemSkeleton() {
   return (
     <div
       style={{
-        paddingLeft: level ? `${(level * 12) + 25}px` : "12px"
+        paddingLeft: "12px"
       }}
       className="flex gap-x-2 py-[3px]"
     >
