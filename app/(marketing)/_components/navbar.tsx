@@ -18,7 +18,7 @@ export const Navbar = () => {
 
   return (
     <div className={cn(
-      "z-50 bg-background bg-orange-100 dark:bg-sky-950 fixed top-0 flex items-center w-full p-6",
+      "z-50 bg-background dark:bg-[#1F1F1F] fixed top-0 flex items-center w-full p-6",
       scrolled && "border-b shadow-sm"//当navbar下降的时候，将其固定在最上方
     )}>
       <Logo />
@@ -44,7 +44,7 @@ export const Navbar = () => {
           <>
             <Button variant="ghost" size="sm" asChild>
               <Link href="/documents">
-                Enter  MCITotion
+                Get Started
               </Link>
             </Button>
             <UserButton

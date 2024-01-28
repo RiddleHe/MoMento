@@ -15,7 +15,7 @@ const dosis = Dosis({ subsets: ['latin'] });
 
 
 export const metadata: Metadata = {//网站标题和描述
-  title: 'MCITotion',
+  title: 'MoMento',
   description: 'The connected workspace where better, faster work happens.',
   icons: {//切换dark and light mode
     icon: [

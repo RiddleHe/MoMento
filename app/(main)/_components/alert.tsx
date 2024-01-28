@@ -18,25 +18,22 @@ const AlertBlock = ({showAlert, onClick }: AlertBlockProps) => {
     return (
         <div>
         {showAlert && (
-            <div className="alert-wrapper mx-3 my-2 bg-orange-300 dark:bg-sky-900">
-                <Alert className="bg-orange-300 dark:bg-sky-900">
-                    <AlertOctagon className="h-4 w-4 "/>
+            <div className="alert-wrapper ml-3 mr-5 mt-10 my-2">
+                <Alert className="bg-gray-700">
+                    <AlertOctagon className="h-4 w-4"/>
                     <AlertTitle>Heads up!</AlertTitle>
-                    <AlertDescription>
-                        Your daily important!
-                    </AlertDescription>
                     <textarea
                         value={inputText}
                         onChange={e => setInputText(e.target.value)}
-                        placeholder="Enter some text here..."
-                        className="text-input-class text-wrap bg-orange-300 dark:bg-sky-900" // Add your CSS class for styling
+                        placeholder="Your daily reminder..."
+                        className="text-input-class text-wrap bg-secondary mt-3" // Add your CSS class for styling
                     />
                     <button onClick={onClick} className="close-button">Close</button>
                 </Alert>
             </div>
         )},
             {!showAlert &&
-                <Button onClick={onClick} className=" toggle-alert-button mx-4 my-3 rounded-full transition-transform transform-gpu hover:-translate-y-1 hover:shadow-lg bg-gray-400 ">
+                <Button onClick={onClick} className=" toggle-alert-button mx-4 my-3 rounded-full transition-transform transform-gpu hover:-translate-y-1 hover:shadow-lg">
                     Show Alert
                 </Button>}
         </div>
