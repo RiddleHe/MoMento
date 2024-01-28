@@ -61,7 +61,7 @@ const Editor = ({
             value={code}
             options={{
               lineNumbers: true,
-              mode: 'javascript',
+              mode: 'clike',
               theme: 'material',
             }}
             onChange={(codeMirrorEditor, data, value) => {
