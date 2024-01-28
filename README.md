@@ -1,6 +1,6 @@
 # **Welcome to MoMento!**
 
-A simple, fast, intuitive note taking  app for MCIT students
+A simple, fast, intuitive note taking app for MCIT students, built with Next.js, React, Typescript, and Node.js
 
 -   Can use AI to auto-complete notes and code snippets in seconds
 -   Can write and highlight blocks of code
