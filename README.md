@@ -6,6 +6,7 @@ A simple, fast, intuitive note taking  app for MCIT students
 -   Can write and highlight blocks of code
 -   Can share files with group members and update content in real-time
 
+Live demo: https://momento-zeta.vercel.app
 ___
 
 For deployment, need to use **npm install --force** due to react-codemirror2's compability issue with React version 18
