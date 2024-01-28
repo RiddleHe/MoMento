@@ -51,7 +51,7 @@ const Editor = ({
     type: "codeblock",
     containsInlineContent: true,
     render: ({ block, editor }) => {
-      const code = block.content.length ? block.content[0].text : "" ;
+      const code = block.content.length && 'text' in block.content[0] ? block.content[0].text : "";
 
       return (
         <div>
