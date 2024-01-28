@@ -119,46 +119,9 @@ const Editor = ({
     "codeblock": CodeBlockComponent,
   };
 
-  const insertCode = (editor: BlockNoteEditor) => {
-    // Block that the text cursor is currently in.
-    const currentBlock = editor.getTextCursorPosition().block;
-
-    const formattedCode = `
-    public class Main {
-      int x = 5;
-    
-      public static void main(String[] args) {
-        Main myObj1 = new Main();  // Object 1
-        Main myObj2 = new Main();  // Object 2
-        System.out.println(myObj1.x);
-        System.out.println(myObj2.x);
-      }
-    }
-    `;
-
-    // New block we want to insert.
-    const codeBlock = {
-      type: "paragraph" as const,
-      content: [{ type: "text", text: formattedCode, styles: { code: true } }],
-    } as const;
-
-    // Inserting the new block after the current one.
-    editor.insertBlocks([codeBlock], currentBlock, "before");
-  };
-
-  const insertCodeItem: ReactSlashMenuItem = {
-    name: "Insert Code",
-    execute: insertCode,
-    aliases: ["code", "codeblock"],
-    group: "Other",
-    icon: <HiOutlineGlobeAlt size={18} />,
-    hint: "Inserts a code block",
-  }
-
   const newSlashMenuItems= [
       ...getDefaultReactSlashMenuItems(),
       insertCodeBlock,
-      insertCodeItem,
   ]
 
   const editor: BlockNoteEditor = useBlockNote({
