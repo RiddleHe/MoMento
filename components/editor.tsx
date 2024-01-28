@@ -53,7 +53,7 @@ const Editor = ({
     type: "codeblock",
     containsInlineContent: true,
     render: ({ block, editor }) => {
-      const code = block.content.length ? block.content[0].text : "" ;
+      const code = block.content.length && 'text' in block.content[0] ? block.content[0].text : "";
 
       return (
         <div>
@@ -66,7 +66,7 @@ const Editor = ({
             }}
             onChange={(codeMirrorEditor, data, value) => {
               editor.updateBlock(block, {
-                content: [{ type: 'text', text: value, styles: {} }],
+                content: [{ type: 'text', text: value, styles: {} }] as any,
               });
             }}
 
@@ -176,7 +176,7 @@ const Editor = ({
         className="rounded-full ml-10 mt-4 transition hover:bg-primary/90 bg-primary/80 px-4 py-2"
       >
         {isLoading ?
-            <BeatLoader size={5} color={"black"} />
+            <BeatLoader size={5} color={resolvedTheme === "dark" ? "black" : "white"} />
             : "Generate"}
       </Button>
     </div>
