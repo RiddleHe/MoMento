@@ -9,7 +9,7 @@ A simple, fast, intuitive note taking  app for MCIT students
 Live demo: https://momento-zeta.vercel.app
 ___
 
-For deployment, need to use **npm install --force** due to react-codemirror2's compability issue with React version 18
+For deployment, need to use **```npm install --force```** due to react-codemirror2's compability issue with React version 18
 
 
 ___
