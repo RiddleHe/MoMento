@@ -26,11 +26,53 @@ import {useCallback} from "react";
 import {BeatLoader} from "react-spinners";
 import CustomFormattingToolBar from "@/components/custom-toolbar";
 
+import { BiCode } from "react-icons/bi";
+import { UnControlled as CodeMirror } from 'react-codemirror2';
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/material.css';
+import 'codemirror/mode/javascript/javascript';
+
 interface EditorProps {
   onChange: (value: string) => void;
   initialContent?: string;
   editable?: boolean;
 };
+
+const CodeBlockComponent = createReactBlockSpec({
+  type: "codeblock",
+  containsInlineContent: true,
+  render: ({ block, editor }) => {
+    const code = block.content.length ? block.content[0].text : "# enter code here" ;
+
+    return (
+      <div>
+        <CodeMirror
+          editorDidMount={editor => {
+            setTimeout(() => editor.refresh(), 0);
+            editor.setSize(null, "auto");
+            editor.on('change', () => {
+              editor.setSize(null, "auto");
+            });
+          }}
+          options={{
+            lineNumbers: true,
+            mode: 'javascript',
+            theme: 'material',
+          }}
+          value={code}
+          onChange={(codeMirrorEditor, data, value) => {
+            editor.updateBlock(block, {
+              content: [{ type: 'text', text: value, styles: {} }],
+            });
+          }}
+        />
+      </div>
+    );
+  },
+  propSchema: {
+    ...defaultProps
+  }
+});
 
 const Editor = ({
   onChange,
@@ -48,48 +90,42 @@ const Editor = ({
     return response.url;
   }
 
-  const insertCode = (editor: BlockNoteEditor) => {
+  const insertCodeExecute = (editor: BlockNoteEditor) => {
     // Block that the text cursor is currently in.
     const currentBlock = editor.getTextCursorPosition().block;
 
-    const formattedCode = `
-    public class Main {
-      int x = 5;
-    
-      public static void main(String[] args) {
-        Main myObj1 = new Main();  // Object 1
-        Main myObj2 = new Main();  // Object 2
-        System.out.println(myObj1.x);
-        System.out.println(myObj2.x);
-      }
-    }
-    `;
-
     // New block we want to insert.
-    const codeBlock = {
-      type: "paragraph" as const,
-      content: [{ type: "text", text: formattedCode, styles: { code: true } }],
+    const newCodeBlock = {
+      type: "codeblock" as const,
+      content: [{ type: "text", text: "Hello world", styles: { bold: true } }],
     } as const;
 
     // Inserting the new block after the current one.
-    editor.insertBlocks([codeBlock], currentBlock, "before");
+    editor.insertBlocks([newCodeBlock], currentBlock, "before");
+
   };
 
-  const insertCodeItem: ReactSlashMenuItem = {
+  const insertCodeBlock: ReactSlashMenuItem = {
     name: "Insert Code",
-    execute: insertCode,
-    aliases: ["code", "codeblock"],
-    group: "Other",
-    icon: <HiOutlineGlobeAlt size={18} />,
-    hint: "Inserts a code block",
+    execute: insertCodeExecute,
+    aliases: ["code", "cd"],
+    group: "Code",
+    icon: <BiCode />,
+    hint: "Inserts a code block (hint)",
   }
+
+  const customSchema = {
+    ...defaultBlockSchema,
+    "codeblock": CodeBlockComponent,
+  };
 
   const newSlashMenuItems= [
       ...getDefaultReactSlashMenuItems(),
-      insertCodeItem,
+      insertCodeBlock,
   ]
 
   const editor: BlockNoteEditor = useBlockNote({
+    blockSchema: customSchema,
     editable,
     initialContent:
       initialContent
