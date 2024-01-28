@@ -1,5 +1,7 @@
 "use client";
 
+import { Calendar } from "@/components/ui/calendar";
+import { CalendarRange } from 'lucide-react';
 import {
   ChevronsLeft,
   MenuIcon,
@@ -10,7 +12,7 @@ import {
   Trash
 } from "lucide-react";
 import { useParams, usePathname, useRouter } from "next/navigation";
-import { ElementRef, useEffect, useRef, useState } from "react";
+import {ElementRef, useCallback, useEffect, useRef, useState} from "react";
 import { useMediaQuery } from "usehooks-ts";//用于检测屏幕宽度是否小于768px
 import { useMutation } from "convex/react";//创建新文档
 import { toast } from "sonner";
@@ -30,6 +32,8 @@ import { Item } from "./item";
 import { DocumentList } from "./document-list";
 import { TrashBox } from "./trash-box";
 import { Navbar } from "./navbar";
+import AlertBlock from "@/app/(main)/_components/alert";
+import {Button} from "@/components/ui/button";
 
 export const Navigation = () => {
   const router = useRouter();
@@ -45,6 +49,9 @@ export const Navigation = () => {
   const navbarRef = useRef<ElementRef<"div">>(null);
   const [isResetting, setIsResetting] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [showAlert, setShowAlert] = useState(true);
 
   useEffect(() => {
     if (isMobile) {
@@ -132,6 +139,21 @@ export const Navigation = () => {
     });
   };
 
+  const toggleCalendar = () => {
+    setShowCalendar(!showCalendar);
+  };
+
+  const toggleAlert = () => {
+    setShowAlert(!showAlert); // 切换通知显示
+  };
+
+  // 在 AlertBlock 关闭时调用的函数
+  const changeAlert = useCallback(() => {
+    setShowAlert((value) => !value);
+  }, []);
+
+  // 处理 AlertBlock 输入变化的函数
+
   return (
     <>
       <aside
@@ -166,6 +188,12 @@ export const Navigation = () => {
             onClick={settings.onOpen}
           />
           <Item
+              label="Canlendar"
+              icon={CalendarRange}
+              onClick={toggleCalendar}
+          />
+
+          <Item
             onClick={handleCreate}
             label="New note"
             icon={PlusCircle}
@@ -195,6 +223,11 @@ export const Navigation = () => {
           onClick={resetWidth}
           className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-full w-1 bg-primary/10 right-0 top-0"//sidebar可变长或者变短
         />
+        <AlertBlock
+            showAlert={showAlert}
+            onClick={changeAlert}
+        />
+
       </aside>
       <div
         ref={navbarRef}
@@ -215,6 +248,14 @@ export const Navigation = () => {
           </nav>//收缩sidebar的按钮
         )}
       </div>
+      {showCalendar && (
+          <Calendar
+              mode="single"
+              selected={date}
+              onSelect={setDate}
+              className="rounded-md border"
+          />
+      )}
     </>
   )
 }

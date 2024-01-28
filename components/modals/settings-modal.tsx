@@ -26,10 +26,18 @@ export const SettingsModal = () => {
               Appearance
             </Label>
             <span className="text-[0.8rem] text-muted-foreground">
-              Customize how Jotion looks on your device
+              Customize how MCITotion looks on your device
+            </span>
+            <Label>
+              Language
+            </Label>
+            <span className="text-[0.8rem] text-muted-foreground">
+              Customize your language
             </span>
           </div>
-          <ModeToggle />
+          <div className="translate-y-[-50%]"> {/* 这里添加了一个 div 并应用了 translate-y 类 */}
+            <ModeToggle/>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
