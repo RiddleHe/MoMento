@@ -26,7 +26,8 @@ export const Logo = () => {
         className="hidden dark:block"//默认情况下都隐藏图标，但是dark模式下显示
       />
       <p className={cn("font-semibold", font.className)}>
-          MCITotion
+          MoMento
+
       </p>
     </div>
   )

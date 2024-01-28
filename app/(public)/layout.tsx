@@ -4,7 +4,7 @@ const PublicLayout = ({
   children: React.ReactNode;
 }) => {
   return ( 
-    <div className="h-full dark:bg-[#1F1F1F]">
+    <div className="h-full bg-orange-50 dark:bg-sky-900">
       {children}
     </div>
    );

@@ -14,10 +14,10 @@ export const Heading = () => {
   return (
     <div className="max-w-3xl space-y-4">
       <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold">
-        WE ARE MCIT BIGASSSS Welcome to <span className="underline">MCITotion</span>
+        WE ARE MCIT BIGASSSS Welcome to <span className="underline">MoMento</span>
       </h1>
       <h3 className="text-base sm:text-xl md:text-2xl font-medium">
-          MCITotion is the connected studyspace where <br />
+          MoMento is the connected studyspace where <br />
         better, faster study happens.
       </h3>
       {isLoading && (
@@ -28,7 +28,7 @@ export const Heading = () => {
       {isAuthenticated && !isLoading && (
         <Button asChild>
           <Link href="/documents">
-            Enter MCITotion
+            Enter MoMento
             <ArrowRight className="h-4 w-4 ml-2" />
           </Link>
         </Button>
@@ -36,7 +36,7 @@ export const Heading = () => {
       {!isAuthenticated && !isLoading && (
         <SignInButton mode="modal">
           <Button>
-            Get MCITotion free
+            Get Started
             <ArrowRight className="h-4 w-4 ml-2" />
           </Button>
         </SignInButton>
