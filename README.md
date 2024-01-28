@@ -1,4 +1,5 @@
-**Welcome to MoMento!**
+# **Welcome to MoMento!**
+
 A simple, fast, intuitive note taking  app for MCIT students
 
 -   Can use AI to auto-complete notes and code snippets in seconds
@@ -15,4 +16,4 @@ ___
 
 Inspired by [Notion](https://www.notion.so/)
 
-Credit to: [Code with Antonio](https://www.codewithantonio.com/)
+Credit to [Code with Antonio](https://www.codewithantonio.com/)
