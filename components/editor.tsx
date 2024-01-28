@@ -26,11 +26,53 @@ import {useCallback} from "react";
 import {BeatLoader} from "react-spinners";
 import CustomFormattingToolBar from "@/components/custom-toolbar";
 
+import { BiCode } from "react-icons/bi";
+import { UnControlled as CodeMirror } from 'react-codemirror2';
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/material.css';
+import 'codemirror/mode/javascript/javascript';
+
 interface EditorProps {
   onChange: (value: string) => void;
   initialContent?: string;
   editable?: boolean;
 };
+
+const CodeBlockComponent = createReactBlockSpec({
+  type: "codeblock",
+  containsInlineContent: true,
+  render: ({ block, editor }) => {
+    const code = block.content.length ? block.content[0].text : "# enter code here" ;
+
+    return (
+      <div>
+        <CodeMirror
+          editorDidMount={editor => {
+            setTimeout(() => editor.refresh(), 0);
+            editor.setSize(null, "auto");
+            editor.on('change', () => {
+              editor.setSize(null, "auto");
+            });
+          }}
+          options={{
+            lineNumbers: true,
+            mode: 'javascript',
+            theme: 'material',
+          }}
+          value={code}
+          onChange={(codeMirrorEditor, data, value) => {
+            editor.updateBlock(block, {
+              content: [{ type: 'text', text: value, styles: {} }],
+            });
+          }}
+        />
+      </div>
+    );
+  },
+  propSchema: {
+    ...defaultProps
+  }
+});
 
 const Editor = ({
   onChange,
@@ -47,6 +89,35 @@ const Editor = ({
 
     return response.url;
   }
+
+  const insertCodeExecute = (editor: BlockNoteEditor) => {
+    // Block that the text cursor is currently in.
+    const currentBlock = editor.getTextCursorPosition().block;
+
+    // New block we want to insert.
+    const newCodeBlock = {
+      type: "codeblock" as const,
+      content: [{ type: "text", text: "Hello world", styles: { bold: true } }],
+    } as const;
+
+    // Inserting the new block after the current one.
+    editor.insertBlocks([newCodeBlock], currentBlock, "before");
+
+  };
+
+  const insertCodeBlock: ReactSlashMenuItem = {
+    name: "Insert Code",
+    execute: insertCodeExecute,
+    aliases: ["code", "cd"],
+    group: "Code",
+    icon: <BiCode />,
+    hint: "Inserts a code block (hint)",
+  }
+
+  const customSchema = {
+    ...defaultBlockSchema,
+    "codeblock": CodeBlockComponent,
+  };
 
   const insertCode = (editor: BlockNoteEditor) => {
     // Block that the text cursor is currently in.
@@ -86,10 +157,12 @@ const Editor = ({
 
   const newSlashMenuItems= [
       ...getDefaultReactSlashMenuItems(),
+      insertCodeBlock,
       insertCodeItem,
   ]
 
   const editor: BlockNoteEditor = useBlockNote({
+    blockSchema: customSchema,
     editable,
     initialContent:
       initialContent
